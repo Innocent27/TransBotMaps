@@ -1,114 +1,130 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Dummy Website</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Map — GABS Style Example</title>
+
+  <!-- =========================
+       Styles (matches GABS look)
+       ========================= -->
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-      background: #f9f9f9;
-      color: #333;
+    :root{
+      --gabs-green: #1f8a3a;
+      --gabs-dark: #13592a;
+      --muted: #6b6b6b;
+      --card-bg: #ffffff;
+      --page-bg: #f3f6f4;
+      --max-width: 1100px;
+      --radius: 10px;
+      --shadow: 0 6px 18px rgba(18, 40, 20, 0.08);
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
-    header {
-      background: #4CAF50;
-      color: white;
-      padding: 1rem;
-      text-align: center;
+    html,body{ height:100%; margin:0; background:var(--page-bg); color:#111; }
+
+    /* Header */
+    .site-header{
+      background: linear-gradient(180deg,var(--gabs-green),var(--gabs-dark));
+      color:#fff;
+      padding:18px 12px;
+      box-shadow: 0 3px 8px rgba(8,20,10,0.12);
+      position:sticky;
+      top:0;
+      z-index:1000;
+    }
+    .header-inner{
+      max-width:var(--max-width);
+      margin:0 auto;
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+    .logo{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      text-decoration:none;
+      color:#fff;
+    }
+    .logo .mark{
+      width:48px; height:48px;
+      border-radius:8px;
+      background:linear-gradient(135deg, #fff2, #ffffff11);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:700; font-size:20px;
+      border:2px solid rgba(255,255,255,0.12);
+    }
+    .site-title{ font-size:18px; font-weight:600; letter-spacing:0.2px; }
+
+    /* Nav */
+    nav.main-nav{ margin-left:auto; display:flex; gap:8px; align-items:center; }
+    nav.main-nav a{
+      color:#fff; text-decoration:none; padding:8px 12px;
+      border-radius:6px; font-weight:600; font-size:14px;
+      opacity:0.95;
+    }
+    nav.main-nav a:hover{ background: rgba(255,255,255,0.06); }
+
+    /* Search / actions */
+    .header-actions{ display:flex; gap:10px; margin-left:12px; align-items:center; }
+    .btn{
+      background:var(--gabs-green); color:#fff; border:none; padding:8px 14px;
+      border-radius:8px; cursor:pointer; font-weight:600; box-shadow:var(--shadow);
+      text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn.secondary{
+      background:#fff; color:var(--gabs-dark); border:1px solid rgba(0,0,0,0.06);
     }
 
-    nav {
-      background: #333;
-      display: flex;
-      justify-content: center;
+    /* Page layout */
+    .container{
+      max-width:var(--max-width);
+      margin:24px auto;
+      padding:0 16px;
+      display:grid;
+      grid-template-columns: 1fr 380px;
+      gap:20px;
     }
 
-    nav a {
-      color: white;
-      padding: 0.8rem 1.2rem;
-      text-decoration: none;
-      display: block;
+    /* Left: Map card */
+    .card{
+      background:var(--card-bg);
+      border-radius:var(--radius);
+      padding:14px;
+      box-shadow:var(--shadow);
+      min-height:520px;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    .card h2{ margin:0 0 8px 0; font-size:18px; color:var(--gabs-dark); }
+    .meta{ color:var(--muted); font-size:13px; margin-bottom:8px; }
+
+    /* Map container */
+    #map{
+      flex:1 1 auto;
+      border-radius:8px;
+      overflow:hidden;
+      border:1px solid #e8efe9;
     }
 
-    nav a:hover {
-      background: #575757;
+    /* Right sidebar */
+    .sidebar{
+      display:flex; flex-direction:column; gap:12px;
     }
-
-    main {
-      padding: 2rem;
-      max-width: 900px;
-      margin: auto;
+    .info-card{
+      background:var(--card-bg); padding:12px; border-radius:10px; box-shadow:var(--shadow);
     }
+    .info-card h3{ margin:0 0 8px 0; font-size:15px; color:var(--gabs-dark); }
+    .info-card p{ margin:0; color:var(--muted); font-size:14px; line-height:1.4; }
 
-    section {
-      margin-bottom: 2rem;
-    }
+    /* small list */
+    .list{ margin:8px 0 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .list li{ display:flex; gap:10px; align-items:center; }
+    .dot{ width:10px; height:10px; border-radius:50%; background:var(--gabs-green); }
 
-    footer {
-      background: #333;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      background: #4CAF50;
-      color: white;
-      border-radius: 5px;
-      text-decoration: none;
-    }
-
-    .btn:hover {
-      background: #45a049;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Welcome to My Dummy Site</h1>
-    <p>This is a placeholder site built with HTML & CSS</p>
-  </header>
-
-  <nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <main>
-    <section id="about">
-      <h2>About</h2>
-      <p>This is a simple HTML dummy website you can use for testing, practice, or hosting experiments on GitHub Pages or Netlify.</p>
-    </section>
-
-    <section id="services">
-      <h2>Services</h2>
-      <ul>
-        <li>Web Development</li>
-        <li>App Design</li>
-        <li>Technical Consulting</li>
-      </ul>
-      <a href="https://example.com" target="_blank" class="btn">Learn More</a>
-    </section>
-
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:test@example.com">test@example.com</a></p>
-      <p>Phone: <a href="tel:+27111222333">+27 11 122 2333</a></p>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 My Dummy Site</p>
-  </footer>
-</body>
-</html>
+    /* Footer */
+    .site-footer{
+      max-width:var(--max-width);
+      marg
